@@ -1,0 +1,29 @@
+# --- Python / sidecar ---
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# --- Data (bind-mounted, machine-local; never commit generated artifacts) ---
+data/db/*.duckdb
+data/db/*.duckdb.wal
+data/db/checkpoints*
+data/storage/
+!data/storage/.gitkeep
+data/synthetic/generated/
+
+# --- Machine-local config (each machine generates its own from .env.example) ---
+.env
+
+# --- Go / Wails ---
+build/bin/
+frontend/node_modules/
+frontend/dist/
+frontend/wailsjs/
+*.exe
+
+# --- Editor / OS ---
+.DS_Store
+Thumbs.db
+*.log

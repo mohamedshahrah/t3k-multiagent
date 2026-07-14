@@ -1,0 +1,14 @@
+[
+  { "id": 1,  "name": "Ayşe Yılmaz",     "title": "Daire Başkanı",       "email": "ayse.yilmaz@ornek.edu.tr",     "department_id": 1 },
+  { "id": 2,  "name": "Mehmet Demir",     "title": "Şef",                 "email": "mehmet.demir@ornek.edu.tr",    "department_id": 1 },
+  { "id": 3,  "name": "Zeynep Kaya",      "title": "Memur",               "email": "zeynep.kaya@ornek.edu.tr",     "department_id": 1 },
+  { "id": 4,  "name": "Ali Çelik",        "title": "Daire Başkanı",       "email": "ali.celik@ornek.edu.tr",       "department_id": 2 },
+  { "id": 5,  "name": "Fatma Şahin",      "title": "Uzman",               "email": "fatma.sahin@ornek.edu.tr",     "department_id": 2 },
+  { "id": 6,  "name": "Hasan Öztürk",     "title": "Hukuk Müşaviri",      "email": "hasan.ozturk@ornek.edu.tr",    "department_id": 3 },
+  { "id": 7,  "name": "Elif Arslan",      "title": "Avukat",              "email": "elif.arslan@ornek.edu.tr",     "department_id": 3 },
+  { "id": 8,  "name": "Mustafa Doğan",    "title": "Daire Başkanı",       "email": "mustafa.dogan@ornek.edu.tr",   "department_id": 4 },
+  { "id": 9,  "name": "Hatice Aydın",     "title": "Mali Hizmetler Uzmanı","email": "hatice.aydin@ornek.edu.tr",   "department_id": 4 },
+  { "id": 10, "name": "Emre Koç",         "title": "Sistem Yöneticisi",   "email": "emre.koc@ornek.edu.tr",        "department_id": 5 },
+  { "id": 11, "name": "Selin Yıldız",     "title": "Yazılım Uzmanı",      "email": "selin.yildiz@ornek.edu.tr",    "department_id": 5 },
+  { "id": 12, "name": "Burak Aksoy",      "title": "Özel Kalem Müdürü",   "email": "burak.aksoy@ornek.edu.tr",     "department_id": 6 }
+]

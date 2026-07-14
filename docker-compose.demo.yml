@@ -1,0 +1,10 @@
+# Demo profile: baked image, no source mounts, no debug port.
+# Usage: docker compose -f docker-compose.yml -f docker-compose.demo.yml up
+# (Do NOT include the override file — this must not pick up dev mounts/reload.)
+services:
+  sidecar:
+    build: ./sidecar
+    image: evrak-sidecar:demo
+    volumes:
+      - ./data:/data          # DB + files only; no code mount
+    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8756"]

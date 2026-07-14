@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Öğrenci İşleri Daire Başkanlığı",
+    "responsibilities_tr": "Öğrenci kayıt, belge, transkript, mezuniyet, staj ve öğrencilerin dilekçe taleplerinin yürütülmesinden sorumludur. Kayıt dondurma, ders kaydı ve öğrenci belgesi işlemleri bu birimde yapılır."
+  },
+  {
+    "id": 2,
+    "name": "Personel Daire Başkanlığı",
+    "responsibilities_tr": "Akademik ve idari personelin özlük işleri, atama, izin, terfi ve görevlendirme süreçlerini yürütür. İzin talepleri ve personel yazışmaları bu birimin görev alanındadır."
+  },
+  {
+    "id": 3,
+    "name": "Hukuk Müşavirliği",
+    "responsibilities_tr": "Üniversitenin taraf olduğu hukuki uyuşmazlıklar, itirazlar, sözleşme incelemeleri ve mevzuata uygunluk görüşlerinden sorumludur. İtiraz ve dava konulu evraklar buraya yönlendirilir."
+  },
+  {
+    "id": 4,
+    "name": "Strateji Geliştirme Daire Başkanlığı",
+    "responsibilities_tr": "Bütçe, mali raporlama, ödeme ve fatura işlemleri ile stratejik planlamayı yürütür. Fatura, ödeme emri ve mali konulu resmî yazılar bu birime aittir."
+  },
+  {
+    "id": 5,
+    "name": "Bilgi İşlem Daire Başkanlığı",
+    "responsibilities_tr": "Bilişim altyapısı, yazılım, ağ, e-posta ve sistem erişim taleplerinden sorumludur. Teknik destek ve sistem erişimi konulu talepler buraya yönlendirilir."
+  },
+  {
+    "id": 6,
+    "name": "Rektörlük Özel Kalem",
+    "responsibilities_tr": "Rektörlük makamına gelen davet, protokol, üst düzey yazışma ve makam onayı gerektiren evrakların koordinasyonunu yürütür."
+  }
+]

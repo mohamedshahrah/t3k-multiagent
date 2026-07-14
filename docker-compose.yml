@@ -1,0 +1,54 @@
+# Base stack: one `docker compose up` gives every member the identical backend.
+# Everything is published on 127.0.0.1 only — nothing is exposed to the network.
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama   # models pulled once, survive `compose down`
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  sidecar:
+    build: ./sidecar
+    ports:
+      - "127.0.0.1:8756:8756"   # API
+    volumes:
+      - ./data:/data            # DB + ingested files, inspectable from the host
+    environment:
+      OLLAMA_URL: http://ollama:11434
+      DB_PATH: /data/db/evrak.duckdb
+      STORAGE_PATH: /data/storage
+      RULES_PATH: /data/rules
+      MODEL_TAG: ${MODEL_TAG:-gemma3:12b}
+      MODEL_TAG_FALLBACK: ${MODEL_TAG_FALLBACK:-gemma3:4b}
+      EMBED_MODEL_TAG: ${EMBED_MODEL_TAG:-bge-m3}
+      TOOLS_ENABLED: ${TOOLS_ENABLED:-1}
+      MAX_TOOL_STEPS: ${MAX_TOOL_STEPS:-5}
+      TOOL_BUDGET_PER_DOC: ${TOOL_BUDGET_PER_DOC:-20}
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8756/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  ollama-models:

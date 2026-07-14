@@ -1,0 +1,14 @@
+# Dev overlay — picked up automatically by `docker compose up`.
+# Bind-mounts source for hot reload and opens the debugpy port.
+services:
+  sidecar:
+    volumes:
+      - ./data:/data
+      - ./sidecar:/app        # hot reload: edits on the host are live in the container
+    ports:
+      - "127.0.0.1:8756:8756"
+      - "127.0.0.1:5678:5678" # debugpy — attach from VS Code (.vscode/launch.json)
+    # debugpy listens on 5678 (non-blocking, no --wait); uvicorn --reload gives hot reload.
+    # Exec-form list so there is no shell/newline ambiguity.
+    command: ["python", "-m", "debugpy", "--listen", "0.0.0.0:5678",
+              "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8756", "--reload"]

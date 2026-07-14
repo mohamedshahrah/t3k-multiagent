@@ -1,0 +1,12 @@
+# Only the sidecar build context matters; keep the image small and reproducible.
+**/.git
+**/__pycache__
+**/*.pyc
+**/.venv
+**/.pytest_cache
+**/.ruff_cache
+frontend/node_modules
+build
+data
+docs
+*.md
