@@ -24,8 +24,9 @@ try {
     docker run --rm --gpus=all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi | Select-String "NVIDIA"
     Write-Host "[ok]   GPU passthrough works" -ForegroundColor Green
 } catch {
-    Write-Host "[warn] GPU-in-Docker failed. Fallback: run Ollama natively and set" -ForegroundColor Yellow
-    Write-Host "       OLLAMA_URL=http://host.docker.internal:11434 in .env" -ForegroundColor Yellow
+    Write-Host "[warn] GPU-in-Docker failed. Fallback: run Ollama natively on the host, then" -ForegroundColor Yellow
+    Write-Host "       start the backend with .\scripts\native.ps1 (excludes the Docker ollama;" -ForegroundColor Yellow
+    Write-Host "       sidecar talks to host.docker.internal:11434). pull-models.ps1 auto-detects it." -ForegroundColor Yellow
 }
 
 # Seed .env from the example on first run.

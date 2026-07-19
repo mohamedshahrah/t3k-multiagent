@@ -1,0 +1,31 @@
+# Native-Ollama profile: run ONLY the sidecar in Docker and talk to an Ollama that
+# runs natively on the host (the escape hatch documented in scripts/setup.ps1, for
+# machines where GPU-in-Docker doesn't work). This overlay EXCLUDES the Docker `ollama`
+# service so it can't collide with the native one on 127.0.0.1:11434.
+#
+# Usage (pass ONLY base + this file, like the demo profile, so the dev override with its
+# hot-reload mounts is NOT picked up):
+#   docker compose -f docker-compose.yml -f docker-compose.native.yml up -d
+#
+# Pull the models into the native Ollama first (pull-models.ps1 auto-detects native mode):
+#   .\scripts\pull-models.ps1
+services:
+  ollama:
+    # Park the Docker ollama behind a profile that is never activated, so `up` never
+    # starts it. (A compose overlay can add a service to a profile but cannot delete it.)
+    profiles: ["docker-ollama-disabled"]
+
+  sidecar:
+    environment:
+      # Reach the host's Ollama from inside the container.
+      OLLAMA_URL: http://host.docker.internal:11434
+    extra_hosts:
+      # Needed on Linux; a harmless no-op on Docker Desktop (Windows/macOS) where the
+      # host.docker.internal name already resolves.
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      ollama:
+        # ollama is excluded in this profile; without required:false the base file's
+        # `depends_on: ollama` would make the project invalid ("depends on undefined service").
+        condition: service_healthy
+        required: false

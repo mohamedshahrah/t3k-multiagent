@@ -42,7 +42,8 @@ cd evrak-asistani
 # 3. arka ucu derle + başlat (ollama + sidecar)
 docker compose up -d --build
 
-# 4. modelleri ollama hacmine indir  (tek seferlik, birkaç GB)
+# 4. modelleri indir  (tek seferlik, birkaç GB) — Docker isteğe bağlıdır:
+#    Docker ollama açıksa hacme, değilse yereldeki (native) Ollama'ya çeker (otomatik seçilir)
 .\scripts\pull-models.ps1
 
 # 5. örnek birim/kullanıcı tohumlarını yükle
@@ -56,6 +57,22 @@ docker compose exec sidecar python -m db.seed
 - **Go/Wails yoksa** — arka uç tek başına kullanılabilir: `http://127.0.0.1:8756/health`, ya da arayüzü
   tarayıcıda çalıştırın: `npm --prefix frontend install; npm --prefix frontend run dev`
   → `http://localhost:5173` (bunun için CORS açıktır).
+
+### GPU Docker'da çalışmıyorsa — yerel (native) Ollama, Docker isteğe bağlı
+Bazı makinelerde GPU, Docker içine geçmez. O zaman Ollama'yı **ana makinede** çalıştırın; arka uç
+`ollama` konteynerini **hariç tutar** (`:11434` çakışması olmaz), yalnızca sidecar Docker'da kalır ve
+`host.docker.internal:11434`'e konuşur:
+```powershell
+# 0. ana makinede Ollama'yı KONTEYNERE AÇIK başlat (varsayılan 127.0.0.1 konteynerden erişilemez):
+$env:OLLAMA_HOST='0.0.0.0:11434'; ollama serve
+.\scripts\pull-models.ps1     # yerel Ollama'yı otomatik algılar, modelleri çeker
+.\scripts\native.ps1          # yalnızca sidecar'ı başlatır (Docker ollama hariç)
+```
+Elle eşdeğeri: `docker compose -f docker-compose.yml -f docker-compose.native.yml up -d`.
+> Varsayılan `docker compose up` davranışı değişmez — ollama + sidecar birlikte gelir. Native mod
+> yalnızca yukarıdaki dosya çiftini verdiğinizde devreye girer (demo profili gibi).
+> `/health` çıktısında `models_present: []` görüyorsanız sidecar Ollama'ya ulaşamıyordur:
+> Ollama'yı `OLLAMA_HOST=0.0.0.0:11434` ile yeniden başlatın (loopback konteynerden erişilemez).
 
 ### Durdurma
 ```powershell
